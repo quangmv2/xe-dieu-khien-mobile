@@ -1,4 +1,4 @@
-import React, { memo } from "react";
+import React, { memo, useState } from "react";
 import { StyleSheet, View, TouchableOpacity, Text, Image } from "react-native";
 
 const ButtonControl = (props) => {

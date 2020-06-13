@@ -1,39 +1,5 @@
-// import React from "react";
-// import { View, FlatList, Text, StyleSheet } from "react-native";
-
-// const DeviceList = (props) => {
-
-//     const { listDevice } = props;
-
-//     console.log(listDevice);
-    
-
-//     return (
-//         <View style={styles.container}>
-//             <FlatList 
-//                 data={listDevice}
-//                 renderItem={(item) => {
-//                     return <Text style={{backgroundColor: 'blue'}}>{item.name}</Text>
-//                 }}
-//                 keyExtractor={item => item.id}
-//             />
-//             <Text>Devices</Text>
-//         </View>
-//     );
-// }
-
-// export default DeviceList;
-// const styles = StyleSheet.create({
-//     container: {
-//         flex: 1,
-//         justifyContent: "center",
-//         alignItems: "center",
-//         backgroundColor: 'red'
-//     }
-// });
-import React from 'react';
-import { SafeAreaView, View, FlatList, StyleSheet, Text, TouchableOpacity, ToastAndroid, Alert } from 'react-native';
-// import Constants from 'expo-constants';
+import React, { memo } from 'react';
+import { View, FlatList, StyleSheet, Text, TouchableOpacity } from 'react-native';
 
 const DATA = [
   {
@@ -50,39 +16,45 @@ const DATA = [
   },
 ];
 
-function Item({ title, address }) {
+const Item = (props) => {
+
+
+  const {title, id} = props.item;
+  const {onPressItem} = props;
+
   return (
-    <TouchableOpacity style={styles.item} onPress={() => Alert.alert(title + '\n' + address)}>
+    <TouchableOpacity style={styles.item} onPress={() => onPressItem(props.item)}>
       <Text style={styles.title}>{title}</Text>
-      <Text style={styles.title}>{address}</Text>
+      <Text style={styles.title}>{id}</Text>
     </TouchableOpacity>
   );
 }
 
-export default function App(props) {
+const DeviceList = (props) => {
 
-  const { listDevice } = props;
+
+  const onChooseDevice = props.onChooseDevice;
   return (
-    <SafeAreaView style={styles.container}>
+    <View style={styles.container}>
       <FlatList
-        data={listDevice}
-        renderItem={({ item }) => <Item title={item.name} address={item.address}/>}
+        data={DATA}
+        renderItem={({ item }) => <Item item={item} onPressItem={onChooseDevice}/>}
         keyExtractor={item => item.id}
       />
-    </SafeAreaView>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    // marginTop: Constants.statusBarHeight,
   },
   item: {
+    flex: 1,
     backgroundColor: '#f9c2ff',
     padding: 20,
     marginVertical: 8,
-    marginHorizontal: 16,
+    // marginHorizontal: 16,
     shadowOffset: {
         height: 5,
         width: 3
@@ -90,6 +62,8 @@ const styles = StyleSheet.create({
     shadowColor: '#fcfcfc'
   },
   title: {
-    fontSize: 32,
+    // fontSize: ,
   },
 });
+
+export default memo(DeviceList);

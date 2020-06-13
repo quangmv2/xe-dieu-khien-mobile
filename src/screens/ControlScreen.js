@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, StyleSheet, FlatList, Dimensions, TouchableOpacity } from "react-native";
+import { View, Text, StyleSheet, FlatList, Dimensions, TouchableOpacity, KeyboardAvoidingView, Platform } from "react-native";
 import Orientation from "react-native-orientation";
 import { Slider } from "react-native-elements";
 import ButtonControl from "../components/ButtonControl";
@@ -36,57 +36,58 @@ const ControlScreen = () => {
 
     return (
         <View style={styles.container}>
-            
-            <View style={styles.control}>
-                <View style={styles.status}>
-                    <Text>Kết nối:</Text>
-                    <Text>Thiết bị:</Text>
-                    <Text>Hướng: {status.orientation}</Text>
-                    <Text>Tốc độ: {status.speed}</Text>
-                    <Text>Rẽ: Không</Text>
-                </View>
-                <View style={styles.controlFlastListContainer}>
-                    <FlatList 
-                        data={listButtonControl}
-                        numColumns={3}
-                        renderItem={({item}) => {
-                            return (
-                                <View style={styles.controlWrapper}>
-                                    {item.isButton? <ButtonControl style={item.style} {...item} setOrientation={setOrientation} />:<View style={item.style}></View>}
-                                </View>
-                            )
-                        }}
-                        keyExtractor={(item, index) => index}
-                        contentContainerStyle={styles.controlFlastList}
-                    />
-                </View>
-            </View>
-            <View style={styles.functions}>
-                <Text style={styles.function}>Function</Text>
-                <View style={styles.speedDevice}>
-                    <View style={styles.deviceContainer}>
-                        <ChooseDevice title={"Bluetooth Device"} />
-                        <ChooseDevice title={"Wifi Device"} />
+           <KeyboardAvoidingView style={styles.container} behavior={Platform.OS==='ios'?'padding':'height'}> 
+                <View style={styles.control}>
+                    <View style={styles.status}>
+                        <Text>Kết nối:</Text>
+                        <Text>Thiết bị:</Text>
+                        <Text>Hướng: {status.orientation}</Text>
+                        <Text>Tốc độ: {status.speed}</Text>
+                        <Text>Rẽ: Không</Text>
                     </View>
-                    <View style={styles.speedContainer}>
-                        <Slider
-                            style={styles.slider}
-                            value={255}
-                            orientation={"vertical"}
-                            minimumValue={0}
-                            maximumValue={255}
-                            minimumTrackTintColor="#444444"
-                            maximumTrackTintColor="#5AC5F8"
-                            thumbTintColor="#5AC5F8"
-                            onValueChange={value=>setSpeed(255-value)}
-                            step={1}
+                    <View style={styles.controlFlastListContainer}>
+                        <FlatList 
+                            data={listButtonControl}
+                            numColumns={3}
+                            renderItem={({item}) => {
+                                return (
+                                    <View style={styles.controlWrapper}>
+                                        {item.isButton? <ButtonControl style={item.style} {...item} setOrientation={setOrientation} />:<View style={item.style}></View>}
+                                    </View>
+                                )
+                            }}
+                            keyExtractor={(item, index) => index}
+                            contentContainerStyle={styles.controlFlastList}
                         />
-                    </View> 
+                    </View>
                 </View>
-            </View>
-            <View style={styles.liveVideo}>
-                <Text style={{color: "#FFF"}}>VIDEO</Text>
-            </View>
+                <View style={styles.functions}>
+                    <Text style={styles.function}>Function</Text>
+                    <View style={styles.speedDevice}>
+                        <View style={styles.deviceContainer}>
+                            <ChooseDevice title={"Bluetooth Device"} />
+                            <ChooseDevice title={"Wifi Device"} />
+                        </View>
+                        <View style={styles.speedContainer}>
+                            <Slider
+                                style={styles.slider}
+                                value={255}
+                                orientation={"vertical"}
+                                minimumValue={0}
+                                maximumValue={255}
+                                minimumTrackTintColor="#444444"
+                                maximumTrackTintColor="#5AC5F8"
+                                thumbTintColor="#5AC5F8"
+                                onValueChange={value=>setSpeed(255-value)}
+                                step={1}
+                            />
+                        </View> 
+                    </View>
+                </View>
+                <View style={styles.liveVideo}>
+                    <Text style={{color: "#FFF"}}>VIDEO</Text>
+                </View>
+            </KeyboardAvoidingView>
         </View>
     )
 }
