@@ -43,7 +43,6 @@ const ControlScreen = () => {
                         <Text>Thiết bị:</Text>
                         <Text>Hướng: {status.orientation}</Text>
                         <Text>Tốc độ: {status.speed}</Text>
-                        <Text>Rẽ: Không</Text>
                     </View>
                     <View style={styles.controlFlastListContainer}>
                         <FlatList 
@@ -84,9 +83,9 @@ const ControlScreen = () => {
                         </View> 
                     </View>
                 </View>
-                <View style={styles.liveVideo}>
+                {/* <View style={styles.liveVideo}>
                     <Text style={{color: "#FFF"}}>VIDEO</Text>
-                </View>
+                </View> */}
             </KeyboardAvoidingView>
         </View>
     )
@@ -115,7 +114,8 @@ const styles = StyleSheet.create({
         flex: 4,
         // backgroundColor: 'pink'
         marginHorizontal: 20,
-        marginVertical: 10
+        // marginVertical: 10,
+        marginBottom: 0
     },
     controlFlastListContainer: {
         flex: 8,
@@ -147,12 +147,12 @@ const styles = StyleSheet.create({
         zIndex: 5
     },
     function: {
-        flex: 8.5,
+        flex: 7,
         // backgroundColor: 'blue',
         color: '#FFF'
     },  
     speedDevice: {
-        flex: 3.5,
+        flex: 5,
         justifyContent: "flex-start",
         flexDirection: "column"
         // backgroundColor: 'red',

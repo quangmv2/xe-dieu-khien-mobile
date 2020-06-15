@@ -14,7 +14,6 @@ const DeviceListScreen = () => {
     const getListDevice = async () => {
         const listDevice = await BluetoothSerial.list();
         setDevices(listDevice);
-        console.log(listDevice);
     }
 
     return (

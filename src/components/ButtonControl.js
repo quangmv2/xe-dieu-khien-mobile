@@ -11,9 +11,10 @@ const ButtonControl = (props) => {
     return (
         <TouchableOpacity 
             style={{...props.style, ...styles.container}}
-            activeOpacity={0.7}
-            onPressIn={() => setOrientation(props.title)}
-            onPressOut={() => setOrientation(props.title)}
+            // activeOpacity={0.7}
+            onPress={() => setOrientation(props.title)}
+            // onPressIn={() => setOrientation(props.title)}
+            // onPressOut={() => setOrientation(props.title)}
         >
             {props.image?<Image source={props.image} />:<Text>{props.title}</Text>}
         </TouchableOpacity>

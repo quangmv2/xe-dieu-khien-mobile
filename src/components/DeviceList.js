@@ -23,8 +23,8 @@ const Item = (props) => {
   const {onPressItem} = props;
 
   return (
-    <TouchableOpacity style={styles.item} onPress={() => onPressItem(props.item)}>
-      <Text style={styles.title}>{title}</Text>
+    <TouchableOpacity style={styles.item} onPress={() => onPressItem(props.item.id)}>
+      <Text style={styles.title}>{props.item.name}</Text>
       <Text style={styles.title}>{id}</Text>
     </TouchableOpacity>
   );
@@ -32,13 +32,13 @@ const Item = (props) => {
 
 const DeviceList = (props) => {
 
-
   const onChooseDevice = props.onChooseDevice;
+  const data = props.data || [];
   return (
     <View style={styles.container}>
       <FlatList
-        data={DATA}
-        renderItem={({ item }) => <Item item={item} onPressItem={onChooseDevice}/>}
+        data={data}
+        renderItem={({ item }) => <Item item={item} onPressItem={props.paire}/>}
         keyExtractor={item => item.id}
       />
     </View>

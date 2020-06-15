@@ -1,11 +1,26 @@
-import React, { memo, useState } from "react";
+import React, { memo, useState, useEffect } from "react";
 import { View, StyleSheet, TouchableOpacity, Text } from "react-native";
 import Dialog from "react-native-dialog";
+import BluetoothSerial, { withSubscription } from "react-native-bluetooth-serial-next";
 import DeviceList from "../components/DeviceList";
+
+var idInterval = 0;
 
 const ChooseDevice = memo((props) => {
 
     const [visible, setVisible] = useState(false);
+    const [devices, setDevices] = useState([]);
+    const [device, setDevice] = useState(null);
+
+    useEffect(() => {
+        idInterval = setInterval(() => {
+            getListDevice();
+        }, 1000);
+        setInterval(() => {
+            if (device) BluetoothSerial.write("H");
+        }, 100);
+        return () => clearInterval(idInterval);
+    }, []);
 
     const openDialog = () => {
         setVisible(true);
@@ -19,6 +34,20 @@ const ChooseDevice = memo((props) => {
         console.log(device);
     }
 
+    const getListDevice = async () => {
+        const listDevice = await BluetoothSerial.list();
+        setDevices(listDevice);
+        console.log(listDevice);
+    }
+
+    const paireDevice = async (id) => {
+        const dev = await BluetoothSerial.connect(id);
+        setDevice(dev);
+        console.log("connect", dev);
+        
+        BluetoothSerial.write('1');
+    }
+
     return (
        <>
         <TouchableOpacity style={styles.container} onPress={openDialog}>
@@ -28,7 +57,7 @@ const ChooseDevice = memo((props) => {
             <Dialog.Container visible={visible}>
             <Dialog.Title>{props.title}</Dialog.Title>
             {/* <Dialog.Description> */}
-                <DeviceList onChooseDevice={onChooseDevice} />
+                <DeviceList onChooseDevice={onChooseDevice} data={devices} paire={paireDevice} />
             {/* </Dialog.Description> */}
             <Dialog.Button label="Cancel" onPress={closeDialog}/>
             <Dialog.Button label="Delete" onPress={closeDialog}/>
@@ -48,7 +77,7 @@ const styles = StyleSheet.create({
         borderRadius: 10,
     },
     text: {
-        color: '#FFF'
+        color: '#FFF',
     }
 });
 
