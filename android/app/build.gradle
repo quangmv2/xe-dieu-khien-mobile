@@ -194,8 +194,7 @@ dependencies {
 
     implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.0.0"
 
-    compile project(':react-native-bluetooth-serial-next')
-
+    // compile project(':react-native-bluetooth-serial-next')
     compile project(':react-native-orientation')
 
     debugImplementation("com.facebook.flipper:flipper:${FLIPPER_VERSION}") {

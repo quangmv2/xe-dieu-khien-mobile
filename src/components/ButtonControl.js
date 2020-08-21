@@ -1,10 +1,14 @@
-import React, { memo, useState } from "react";
-import { StyleSheet, View, TouchableOpacity, Text, Image } from "react-native";
+import React, { memo } from "react";
+import { StyleSheet, TouchableOpacity, Text, Image } from "react-native";
+import BluetoothSerial from "react-native-bluetooth-serial-next";
+
 
 const ButtonControl = (props) => {
 
     const onPressControl = () => {
         console.log(props.title);
+        BluetoothSerial.write(String.fromCharCode(1));
+        BluetoothSerial.write(String.fromCharCode(128));
     }
 
     const { setOrientation } = props;
@@ -12,7 +16,7 @@ const ButtonControl = (props) => {
         <TouchableOpacity 
             style={{...props.style, ...styles.container}}
             // activeOpacity={0.7}
-            onPress={() => setOrientation(props.title)}
+            onPress={() => {setOrientation(props.title); onPressControl();}}
             // onPressIn={() => setOrientation(props.title)}
             // onPressOut={() => setOrientation(props.title)}
         >

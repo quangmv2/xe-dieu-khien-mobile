@@ -6,27 +6,22 @@
  * @flow strict-local
  */
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
   SafeAreaView,
   StyleSheet,
-  ScrollView,
-  View,
-  Text,
   StatusBar,
 } from 'react-native';
-
-import {
-  Header,
-  LearnMoreLinks,
-  Colors,
-  DebugInstructions,
-  ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
-import DeviceListScreen from './src/screens/DeviceListScreen';
 import ControlScreen from './src/screens/ControlScreen';
+import BluetoothSerial, { withSubscription } from "react-native-bluetooth-serial-next";
 
-const App: () => React$Node = () => {
+
+const App = () => {
+
+  useEffect(() => {
+    (async () => await BluetoothSerial.requestEnable())();
+  }, [])
+
   return (
     <>
       <StatusBar barStyle="dark-content" backgroundColor={'#FFF'} />

@@ -13,13 +13,13 @@ const ChooseDevice = memo((props) => {
     const [device, setDevice] = useState(null);
 
     useEffect(() => {
-        idInterval = setInterval(() => {
-            getListDevice();
-        }, 1000);
-        setInterval(() => {
-            if (device) BluetoothSerial.write("H");
-        }, 100);
-        return () => clearInterval(idInterval);
+        getListDevice();
+        // idInterval = setInterval(() => {
+        // }, 1000);
+        // setInterval(() => {
+        //     if (device) BluetoothSerial.write("H");
+        // }, 100);
+        // return () => clearInterval(idInterval);
     }, []);
 
     const openDialog = () => {
@@ -41,11 +41,12 @@ const ChooseDevice = memo((props) => {
     }
 
     const paireDevice = async (id) => {
+        console.log(id);
         const dev = await BluetoothSerial.connect(id);
         setDevice(dev);
         console.log("connect", dev);
-        
-        BluetoothSerial.write('1');
+        // BluetoothSerial.write('1');
+        // BluetoothSerial.write(String.fromCharCode(1));
     }
 
     return (
@@ -80,5 +81,10 @@ const styles = StyleSheet.create({
         color: '#FFF',
     }
 });
+
+// export default withSubscription({
+//     subscriptionName: 'events',
+//     destroyOnWillUnmount: true,
+// })(ChooseDevice);
 
 export default ChooseDevice;
